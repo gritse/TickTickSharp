@@ -45,7 +45,7 @@ namespace TickTickSharp.Tests
                 Title = $"Basic Task {DateTime.UtcNow:HHmmss}",
                 Content = "Simple task without dates",
                 ProjectId = project.Id,
-                Priority = 1
+                Priority = TaskPriority.Low
             };
 
             var created = await Client.CreateTaskAsync(task);
@@ -69,7 +69,7 @@ namespace TickTickSharp.Tests
                 StartDate = DateTime.UtcNow.AddDays(1),
                 DueDate = DateTime.UtcNow.AddDays(7),
                 TimeZone = TimeZoneInfo.Utc,
-                Priority = 2
+                Priority = TaskPriority.Medium
             };
 
             var created = await Client.CreateTaskAsync(task);
@@ -90,7 +90,7 @@ namespace TickTickSharp.Tests
                 Title = $"Task with Subtasks {DateTime.UtcNow:HHmmss}",
                 Content = "Task with checklist items",
                 ProjectId = project.Id,
-                Priority = 2,
+                Priority = TaskPriority.Medium,
                 Items = new List<ChecklistItem>
                 {
                     new() { Title = "First subtask", IsCompleted = false, SortOrder = 1 },
@@ -218,7 +218,7 @@ namespace TickTickSharp.Tests
                 Title = $"Task to Complete {DateTime.UtcNow:HHmmss}",
                 Content = "This task will be completed",
                 ProjectId = project.Id,
-                Priority = 1,
+                Priority = TaskPriority.Low,
                 IsCompleted = false
             };
 

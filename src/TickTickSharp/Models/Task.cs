@@ -57,9 +57,8 @@ namespace TickTickSharp.Models
 
         /// <summary>
         /// Gets or sets the task priority.
-        /// Values: None = 0, Low = 1, Medium = 3, High = 5
         /// </summary>
-        public int? Priority { get; set; }
+        public TaskPriority Priority { get; set; } = TaskPriority.None;
 
         /// <summary>
         /// Gets or sets whether the task is completed.
