@@ -10,7 +10,6 @@ A modern, strongly-typed .NET client library for the [TickTick Open API](https:/
 
 - **🔒 Strongly Typed** - Work with `TimeZoneInfo`, `RecurrencePattern`, and `Trigger` objects instead of raw strings
 - **🔄 Recurrence Support** - Full support for daily, weekly, monthly, and yearly recurring tasks using industry-standard RRULE format
-- **⏰ Smart Reminders** - Easy creation of reminders with natural time expressions (15 minutes before, 1 day before, etc.)
 - **🌍 Timezone Aware** - Built-in support for `TimeZoneInfo` with automatic conversion to TickTick's format
 - **📋 Complete CRUD** - Full support for tasks, projects, and subtasks
 - **🎯 Clean Architecture** - Internal DTO/Mapper pattern keeps the public API clean while handling TickTick's JSON format
