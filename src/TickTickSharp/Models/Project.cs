@@ -6,6 +6,11 @@ namespace TickTickSharp.Models
     public class Project
     {
         /// <summary>
+        /// The identifier for the Inbox project.
+        /// </summary>
+        public const string InboxProjectId = "inbox";
+
+        /// <summary>
         /// Gets or sets the project identifier.
         /// </summary>
         public string? Id { get; set; }
@@ -31,19 +36,19 @@ namespace TickTickSharp.Models
         public string? GroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the view mode: "list", "kanban", or "timeline".
+        /// Gets or sets the view mode.
         /// </summary>
-        public string? ViewMode { get; set; }
+        public ProjectViewMode? ViewMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the permission level: "read", "write", or "comment".
+        /// Gets or sets the permission level.
         /// </summary>
-        public string? Permission { get; set; }
+        public ProjectPermission? Permission { get; set; }
 
         /// <summary>
-        /// Gets or sets the project kind: "TASK" or "NOTE".
+        /// Gets or sets the project kind.
         /// </summary>
-        public string? Kind { get; set; }
+        public ProjectKind? Kind { get; set; }
 
         /// <summary>
         /// Gets or sets the order value.

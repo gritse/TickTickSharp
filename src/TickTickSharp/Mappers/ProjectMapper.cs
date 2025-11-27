@@ -14,9 +14,9 @@ namespace TickTickSharp.Mappers
                 Color = project.Color,
                 Closed = project.Closed,
                 GroupId = project.GroupId,
-                ViewMode = project.ViewMode,
-                Permission = project.Permission,
-                Kind = project.Kind,
+                ViewMode = project.ViewMode?.ToString().ToLowerInvariant(),
+                Permission = project.Permission?.ToString().ToLowerInvariant(),
+                Kind = project.Kind?.ToString().ToUpperInvariant(),
                 SortOrder = project.SortOrder
             };
         }
@@ -30,11 +30,53 @@ namespace TickTickSharp.Mappers
                 Color = dto.Color,
                 Closed = dto.Closed,
                 GroupId = dto.GroupId,
-                ViewMode = dto.ViewMode,
-                Permission = dto.Permission,
-                Kind = dto.Kind,
+                ViewMode = ParseViewMode(dto.ViewMode),
+                Permission = ParsePermission(dto.Permission),
+                Kind = ParseKind(dto.Kind),
                 SortOrder = dto.SortOrder
             };
         }
+
+        private static ProjectViewMode? ParseViewMode(string? viewMode)
+        {
+            if (string.IsNullOrEmpty(viewMode))
+                return null;
+
+            return viewMode.ToLowerInvariant() switch
+            {
+                "list" => ProjectViewMode.List,
+                "kanban" => ProjectViewMode.Kanban,
+                "timeline" => ProjectViewMode.Timeline,
+                _ => null
+            };
+        }
+
+        private static ProjectPermission? ParsePermission(string? permission)
+        {
+            if (string.IsNullOrEmpty(permission))
+                return null;
+
+            return permission.ToLowerInvariant() switch
+            {
+                "read" => ProjectPermission.Read,
+                "write" => ProjectPermission.Write,
+                "comment" => ProjectPermission.Comment,
+                _ => null
+            };
+        }
+
+        private static ProjectKind? ParseKind(string? kind)
+        {
+            if (string.IsNullOrEmpty(kind))
+                return null;
+
+            return kind.ToUpperInvariant() switch
+            {
+                "TASK" => ProjectKind.Task,
+                "NOTE" => ProjectKind.Note,
+                _ => null
+            };
+        }
+
     }
 }

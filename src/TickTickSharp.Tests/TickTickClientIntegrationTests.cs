@@ -24,8 +24,8 @@ namespace TickTickSharp.Tests
                 {
                     Name = $"Test Project {DateTime.UtcNow:yyyyMMdd_HHmmss}",
                     Color = "#FF5722",
-                    ViewMode = "list",
-                    Kind = "TASK"
+                    ViewMode = ProjectViewMode.List,
+                    Kind = ProjectKind.Task
                 };
 
                 _testProject = await Client.CreateProjectAsync(_testProject);

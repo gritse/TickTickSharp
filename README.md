@@ -6,17 +6,18 @@
 
 A modern, strongly-typed .NET client library for the [TickTick Open API](https://developer.ticktick.com/). Built with .NET 8 and designed for productivity applications that need to integrate with TickTick's task management platform.
 
-## ✨ Features
+## Features
 
-- **🔒 Strongly Typed** - Work with `TimeZoneInfo`, `RecurrencePattern`, and `Trigger` objects instead of raw strings
-- **🔄 Recurrence Support** - Full support for daily, weekly, monthly, and yearly recurring tasks using industry-standard RRULE format
-- **🌍 Timezone Aware** - Built-in support for `TimeZoneInfo` with automatic conversion to TickTick's format
-- **📋 Complete CRUD** - Full support for tasks, projects, and subtasks
-- **🎯 Clean Architecture** - Internal DTO/Mapper pattern keeps the public API clean while handling TickTick's JSON format
-- **⚡ Async/Await** - Modern async patterns throughout
-- **🧪 Well Tested** - Comprehensive integration tests
+- **Strongly Typed** - Work with `TimeZoneInfo`, `RecurrencePattern`, and `Trigger` objects instead of raw strings
+- **Recurrence Support** - Full support for daily, weekly, monthly, and yearly recurring tasks using industry-standard RRULE format
+- **Smart Reminders** - Easy creation of reminders with natural time expressions (15 minutes before, 1 day before, etc.)
+- **Timezone Aware** - Built-in support for `TimeZoneInfo` with automatic conversion to TickTick's format
+- **Complete CRUD** - Full support for tasks, projects, and subtasks
+- **Clean Architecture** - Internal DTO/Mapper pattern keeps the public API clean while handling TickTick's JSON format
+- **Async/Await** - Modern async patterns throughout
+- **Well Tested** - Comprehensive integration tests
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -61,13 +62,13 @@ var task = new TickTickSharp.Models.Task
     ProjectId = "project-id",
     DueDate = DateTime.Now.AddDays(3),
     TimeZone = TimeZoneInfo.Local,
-    Priority = 2
+    Priority = TaskPriority.Medium
 };
 
 var createdTask = await client.CreateTaskAsync(task);
 ```
 
-## 📖 Examples
+## Examples
 
 ### Working with Projects
 
@@ -79,9 +80,9 @@ var projects = await client.GetProjectsAsync();
 var project = new Project
 {
     Name = "Marketing Campaign",
-    Color = "#FF5722",
-    ViewMode = "list",
-    Kind = "TASK"
+    Color = "#FF5722"
+    ViewMode = ProjectViewMode.List,
+    Kind = ProjectKind.Task
 };
 
 var newProject = await client.CreateProjectAsync(project);
@@ -183,7 +184,7 @@ var task = await client.GetTaskAsync(projectId, taskId);
 
 // Update a task
 task.Title = "Updated title";
-task.Priority = 3;
+task.Priority = TaskPriority.High;
 var updatedTask = await client.UpdateTaskAsync(taskId, task);
 
 // Complete a task
@@ -193,7 +194,7 @@ await client.CompleteTaskAsync(projectId, taskId);
 await client.DeleteTaskAsync(projectId, taskId);
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 TickTickSharp uses a clean architecture with DTOs and mappers to provide a strongly-typed API while maintaining compatibility with TickTick's JSON format:
 
@@ -212,7 +213,7 @@ TickTick API
 - **Mappers** - Handle conversion between public models and DTOs
 - **Client** - HTTP communication layer with proper error handling
 
-## 🔧 Configuration
+## Configuration
 
 ### Custom HttpClient
 
@@ -237,7 +238,7 @@ catch (HttpRequestException ex)
 }
 ```
 
-## 🧪 Testing
+## Testing
 
 The library includes comprehensive integration tests. To run them:
 
@@ -251,7 +252,7 @@ The library includes comprehensive integration tests. To run them:
    dotnet test src/TickTickSharp.Tests
    ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -263,16 +264,16 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Run `dotnet build` to build the solution
 5. Run `dotnet test` to execute tests
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## Links
 
 - [TickTick Open API Documentation](https://developer.ticktick.com/)
 - [TickTick Developer Console](https://developer.ticktick.com/)
 - [NuGet Package](https://www.nuget.org/packages/TickTickSharp/)
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This is an unofficial library and is not affiliated with, endorsed by, or connected to TickTick or Appest Inc. TickTick is a trademark of Appest Inc.
