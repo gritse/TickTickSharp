@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-01-27
+
+### Breaking Changes
+- **Project.ViewMode**: Changed from `string?` to `ProjectViewMode?` enum
+- **Project.Permission**: Changed from `string?` to `ProjectPermission?` enum
+- **Project.Kind**: Changed from `string?` to `ProjectKind?` enum
+- Migration required for any code using these properties with string literals
+
+### Added
+- **ProjectViewMode Enum**: Strongly-typed view mode with values: `List`, `Kanban`, `Timeline`
+- **ProjectPermission Enum**: Strongly-typed permission with values: `Read`, `Write`, `Comment`
+- **ProjectKind Enum**: Strongly-typed project kind with values: `Task`, `Note`
+- **Project.InboxProjectId Constant**: Added `"inbox"` constant for the Inbox project identifier
+- Proper enum parsing and serialization in ProjectMapper
+
+### Changed
+- README: Removed emojis from section headers for better accessibility
+- README: Updated all examples to use new strongly-typed enums
+- Test cases updated to use new enum values
+
 ## [1.1.0] - 2025-07-20
 
 ### Added
