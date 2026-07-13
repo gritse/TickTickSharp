@@ -61,14 +61,15 @@ namespace TickTickSharp.Models
         public TaskPriority Priority { get; set; } = TaskPriority.None;
 
         /// <summary>
-        /// Gets or sets whether the task is completed.
+        /// Gets or sets the task status.
         /// </summary>
-        public bool? IsCompleted { get; set; }
+        public TaskStatus Status { get; set; } = TaskStatus.Active;
 
         /// <summary>
-        /// Gets or sets the task completed time in UTC.
+        /// Gets the task completed time in UTC.
+        /// Server-managed: TickTick stamps it when a task is completed and ignores client-provided values.
         /// </summary>
-        public DateTime? CompletedTime { get; set; }
+        public DateTime? CompletedTime { get; internal set; }
 
         /// <summary>
         /// Gets or sets the task sort order.

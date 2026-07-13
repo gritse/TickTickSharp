@@ -219,7 +219,7 @@ namespace TickTickSharp.Tests
                 Content = "This task will be completed",
                 ProjectId = project.Id,
                 Priority = TaskPriority.Low,
-                IsCompleted = false
+                Status = Models.TaskStatus.Active
             };
 
             var created = await Client.CreateTaskAsync(task);
@@ -227,7 +227,7 @@ namespace TickTickSharp.Tests
             Assert.NotNull(created);
             Assert.NotNull(created.Id);
             Assert.Equal(task.Title, created.Title);
-            Assert.False(created.IsCompleted);
+            Assert.Equal(Models.TaskStatus.Active, created.Status);
             _output.WriteLine($"Created task: {created.Title} (ID: {created.Id})");
 
             await Client.CompleteTaskAsync(project.Id!, created.Id!);
@@ -235,8 +235,36 @@ namespace TickTickSharp.Tests
 
             var completedTask = await Client.GetTaskAsync(project.Id!, created.Id!);
             Assert.NotNull(completedTask);
-            Assert.True(completedTask.IsCompleted);
-            _output.WriteLine($"Verified task completion: {completedTask.Title} (Completed: {completedTask.IsCompleted})");
+            Assert.Equal(Models.TaskStatus.Completed, completedTask.Status);
+            _output.WriteLine($"Verified task completion: {completedTask.Title} (Status: {completedTask.Status})");
+        }
+
+        [Fact]
+        public async Task CreateTaskAndAbandon_ShouldWork()
+        {
+            var project = await GetTestProjectAsync();
+
+            var task = new TickTickSharp.Models.Task
+            {
+                Title = $"Task to Abandon {DateTime.UtcNow:HHmmss}",
+                Content = "This task will be marked as won't do",
+                ProjectId = project.Id
+            };
+
+            var created = await Client.CreateTaskAsync(task);
+
+            Assert.NotNull(created);
+            Assert.NotNull(created.Id);
+            _output.WriteLine($"Created task: {created.Title} (ID: {created.Id})");
+
+            await Client.AbandonTaskAsync(project.Id!, created.Id!);
+            _output.WriteLine($"Abandoned task: {created.Title} (ID: {created.Id})");
+
+            var abandonedTask = await Client.GetTaskAsync(project.Id!, created.Id!);
+            Assert.NotNull(abandonedTask);
+            Assert.Equal(Models.TaskStatus.WontDo, abandonedTask.Status);
+            Assert.NotNull(abandonedTask.CompletedTime);
+            _output.WriteLine($"Verified abandonment: {abandonedTask.Title} (Status: {abandonedTask.Status}, CompletedTime: {abandonedTask.CompletedTime})");
         }
 
     }

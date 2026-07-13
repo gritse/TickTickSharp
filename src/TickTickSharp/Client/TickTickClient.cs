@@ -97,6 +97,22 @@ namespace TickTickSharp.Client
             }
         }
 
+        public async System.Threading.Tasks.Task AbandonTaskAsync(string projectId, string taskId)
+        {
+            // completedTime is server-managed and only stamped on completion, yet the app
+            // hides closed tasks without it. So: complete first, then flip status to WontDo.
+            await CompleteTaskAsync(projectId, taskId);
+
+            var task = await GetTaskAsync(projectId, taskId);
+            if (task == null)
+            {
+                throw new HttpRequestException($"Task '{taskId}' was not found in project '{projectId}'.");
+            }
+
+            task.Status = Models.TaskStatus.WontDo;
+            await UpdateTaskAsync(taskId, task);
+        }
+
         public async System.Threading.Tasks.Task DeleteTaskAsync(string projectId, string taskId)
         {
             var response = await _httpClient.DeleteAsync($"/open/v1/project/{projectId}/task/{taskId}");

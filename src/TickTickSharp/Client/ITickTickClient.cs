@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TickTickSharp.Models;
 
@@ -10,6 +11,7 @@ namespace TickTickSharp.Client
         System.Threading.Tasks.Task<Models.Task?> CreateTaskAsync(Models.Task task);
         System.Threading.Tasks.Task<Models.Task?> UpdateTaskAsync(string taskId, Models.Task task);
         System.Threading.Tasks.Task CompleteTaskAsync(string projectId, string taskId);
+        System.Threading.Tasks.Task AbandonTaskAsync(string projectId, string taskId);
         System.Threading.Tasks.Task DeleteTaskAsync(string projectId, string taskId);
 
         // Project operations

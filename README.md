@@ -187,8 +187,11 @@ task.Title = "Updated title";
 task.Priority = TaskPriority.High;
 var updatedTask = await client.UpdateTaskAsync(taskId, task);
 
-// Complete a task
+// Complete a task (optionally with a custom completion time)
 await client.CompleteTaskAsync(projectId, taskId);
+
+// Mark a task as won't do (abandoned)
+await client.AbandonTaskAsync(projectId, taskId);
 
 // Delete a task
 await client.DeleteTaskAsync(projectId, taskId);

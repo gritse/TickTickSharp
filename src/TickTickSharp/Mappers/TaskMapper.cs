@@ -22,7 +22,7 @@ namespace TickTickSharp.Mappers
                 DueDate = task.DueDate,
                 TimeZone = task.TimeZone?.Id,
                 Priority = task.Priority == TaskPriority.None ? null : (int?)task.Priority,
-                Status = task.IsCompleted == true ? 2 : 0,
+                Status = (int)task.Status,
                 CompletedTime = task.CompletedTime,
                 SortOrder = task.SortOrder,
                 Items = task.Items?.Select(ChecklistItemMapper.ToDto).ToList(),
@@ -45,12 +45,22 @@ namespace TickTickSharp.Mappers
                 DueDate = dto.DueDate,
                 TimeZone = ConvertToTimeZoneInfo(dto.TimeZone),
                 Priority = dto.Priority == null ? TaskPriority.None : (TaskPriority)dto.Priority,
-                IsCompleted = dto.Status == 2,
+                Status = MapStatus(dto.Status),
                 CompletedTime = dto.CompletedTime,
                 SortOrder = dto.SortOrder,
                 Items = dto.Items?.Select(ChecklistItemMapper.FromDto).ToList(),
                 Recurrence = RecurrenceHelper.DeserializeRecurrencePattern(dto.RepeatFlag),
                 Reminders = TriggerHelper.DeserializeTriggers(dto.Reminders)
+            };
+        }
+
+        private static TaskStatus MapStatus(int? status)
+        {
+            return status switch
+            {
+                2 => TaskStatus.Completed,
+                -1 => TaskStatus.WontDo,
+                _ => TaskStatus.Active
             };
         }
 

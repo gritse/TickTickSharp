@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-07-13
+
+### Breaking Changes
+- **Task.IsCompleted**: Replaced `bool? IsCompleted` with `TaskStatus Status` enum
+- Migration: `IsCompleted == true` → `Status == TaskStatus.Completed`, `IsCompleted = true` → `Status = TaskStatus.Completed`
+- **Task.CompletedTime**: Setter is now `internal` — the value is server-managed and client-provided values were silently ignored by the API anyway
+
+### Added
+- **TaskStatus Enum**: Strongly-typed task status with values: `Active`, `Completed`, `WontDo`
+- **Won't Do support**: Tasks can now be marked as abandoned ("Won't Do") via `Status = TaskStatus.WontDo`
+- **AbandonTaskAsync**: New client method to mark a task as won't do, mirroring `CompleteTaskAsync`
+
+### Notes
+- "Won't Do" is not documented in the TickTick Open API. `completedTime` is server-managed (values sent by the client are ignored) and only stamped on completion, while the app hides closed tasks that lack it. `AbandonTaskAsync` therefore completes the task first, then flips its status to `-1`.
+
 ## [2.0.0] - 2025-01-27
 
 ### Breaking Changes
